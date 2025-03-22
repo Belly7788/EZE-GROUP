@@ -1,0 +1,3 @@
+<button id="back-btn" class="bg-orange-custom text-white px-4 py-2 rounded-lg mb-4">ត្រឡប់</button>
+<h3 class="text-xl font-bold text-orange-custom"><?php echo isset($_GET['name']) ? htmlspecialchars($_GET['name']) : 'ស្នើសុំ'; ?></h3>
+<p class="text-gray-700">នេះជាទំព័រសម្រាប់ "<?php echo isset($_GET['name']) ? htmlspecialchars($_GET['name']) : 'ស្នើសុំ'; ?>"។ អ្នកអាចបន្ថែមព័ត៌មានបន្ថែមនៅទីនេះ។</p>

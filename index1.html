@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Circle with Chart.js and Tailwind</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for the icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="flex flex-col items-center space-y-6">
+        <!-- Progress Circle Container -->
+        <div class="relative flex items-center justify-center">
+            <canvas id="progressChart" class="w-32 h-32"></canvas>
+            <div class="absolute flex items-center justify-center">
+                <i class="fas fa-tools text-3xl text-orange-500"></i>
+            </div>
+        </div>
+
+        <!-- Data Labels -->
+        <div class="flex flex-col space-y-4">
+            <div class="flex flex-col">
+                <p class="text-sm text-yellow-500 font-medium">រងចាំ (Pending)</p>
+                <p class="text-sm font-bold text-gray-800" id="pending">0</p>
+            </div>
+            <div class="flex flex-col">
+                <p class="text-sm text-green-700 font-medium">បានបញ្ចប់ (Completed)</p>
+                <p class="text-sm font-bold text-gray-800" id="completed">0</p>
+            </div>
+            <div class="flex flex-col">
+                <p class="text-sm text-blue-700 font-medium">ដំណើរការ (In Progress)</p>
+                <p class="text-sm font-bold text-gray-800" id="inProgress">0</p>
+            </div>
+            <div class="flex flex-col">
+                <p class="text-sm text-red-700 font-medium">បោះបង់ (Canceled)</p>
+                <p class="text-sm font-bold text-gray-800" id="canceled">0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle Chart.js -->
+    <script>
+        // Sample data (you can update this dynamically)
+        const data = {
+            pending: 100,    // #ff8800 (orange)
+            completed: 20,  // green
+            inProgress: 30, // blue
+            canceled: 40    // red
+        };
+
+        // Update the text values
+        document.getElementById('pending').textContent = data.pending;
+        document.getElementById('completed').textContent = data.completed;
+        document.getElementById('inProgress').textContent = data.inProgress;
+        document.getElementById('canceled').textContent = data.canceled;
+
+        // Calculate total for percentage
+        const total = data.pending + data.completed + data.inProgress + data.canceled;
+
+        // Chart.js Doughnut Chart
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [
+                        data.pending,
+                        data.completed,
+                        data.inProgress,
+                        data.canceled
+                    ],
+                    backgroundColor: [
+                        '#ff8800', // orange for Pending
+                        'green',    // green for Completed
+                        'blue',     // blue for In Progress
+                        'red'       // red for Canceled
+                    ],
+                    borderWidth: 0,
+                    borderRadius: 0,
+                    cutout: '70%' // Makes the doughnut thinner
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false // Hide the legend
+                    },
+                    tooltip: {
+                        enabled: false // Disable tooltips
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
